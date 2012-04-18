@@ -106,7 +106,7 @@ class TunnelKey(BASE, QuantumBase):
 
     # Network.uuid
     network_id = Column(String(255), primary_key=True, nullable=False)
-    tunnel_key = Column(Integer, primary_key=True, nullable=False)
+    tunnel_key = Column(Integer, primary_key=True, nullable=False, autoincrement=False)
 
     def __init__(self, network_id, tunnel_key):
         super(TunnelKey, self).__init__()
