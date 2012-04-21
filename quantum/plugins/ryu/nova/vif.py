@@ -50,8 +50,7 @@ class LibvirtOpenVswitchOFPRyuDriver(libvirt_vif.LibvirtOpenVswitchDriver):
         dev = self.get_dev_name(iface_id)
         return _get_port_no(dev)
 
-    def _set_port_state(self, network, mapping, body):
-        tenant_id = mapping['tenant_id']
+    def _set_port_state(self, network, mapping, body, tenant_id):
         net_id = network['id']
         port_id = self.q_conn.get_port_by_attachment(tenant_id, net_id,
                                                      mapping['vif_uuid'])
@@ -69,6 +68,6 @@ class LibvirtOpenVswitchOFPRyuDriver(libvirt_vif.LibvirtOpenVswitchDriver):
             'mac_address': mapping['mac'],
             }
         body = {'port': port_data}
-        self._set_port_state(network, mapping, body)
+        self._set_port_state(network, mapping, body, instance['project_id'])
 
         return result
