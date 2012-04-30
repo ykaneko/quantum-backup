@@ -54,6 +54,10 @@ class LibvirtOpenVswitchOFPRyuDriver(libvirt_vif.LibvirtOpenVswitchDriver):
         net_id = network['id']
         port_id = self.q_conn.get_port_by_attachment(tenant_id, net_id,
                                                      mapping['vif_uuid'])
+        if not port_id:
+            tenant_id = FLAGS.quantum_default_tenant_id
+            port_id = self.q_conn.get_port_by_attachment(tenant_id, net_id,
+                                                     mapping['vif_uuid'])
         self.q_conn.client.set_port_state(net_id, port_id, body,
                                           tenant=tenant_id)
 
